@@ -43,13 +43,12 @@ const CryptoPrices = () => {
           litecoin: data.litecoin.usd_24h_change.toFixed(2),
           ripple: data.ripple.usd_24h_change.toFixed(2),
         });
-        
-        // فرض کنید نمودارها رو می‌خواهیم از تصاویر ثابت استفاده کنیم
+
         setChartData({
-          bitcoin: './icons/btc-chart.png',
-          ethereum: './icons/eth.png',
-          litecoin: './icons/eth.png',
-          ripple: './icons/xrp-chart.png'
+          bitcoin: './icons/1.png',
+          ethereum: './icons/1.png',
+          litecoin: './icons/1.png',
+          ripple: './icons/1.png'
         });
       } catch (error) {
         console.error('Error fetching the prices:', error);
@@ -57,25 +56,25 @@ const CryptoPrices = () => {
     };
 
     fetchPrices();
-    const interval = setInterval(fetchPrices, 30000); // درخواست هر 30 ثانیه یکبار
+    const interval = setInterval(fetchPrices, 30000);
 
     return () => clearInterval(interval);
   }, []);
 
   const renderCard = (coin, label, icon) => {
     return (
-      <div className="w-72 h-40 bg-card text-card-foreground space-y-6 shadow-sm rounded-xl p-3">
+      <div className="w-full bg-card text-card-foreground space-y-6 shadow-sm rounded-xl p-4">
         <div className="flex items-center justify-between">
           <HiArrowTrendingUp className='text-green-500 text-2xl' />
           <div className="flex items-center gap-x-2">
             <p className='text-lg mt-1'>{label}</p>
             <span className='w-10 h-10 flex items-center justify-center bg-gray-800 rounded-xl'>
-              <img className='w-8 h-8 object-cover' src={icon} alt="" />
+              <img className='w-8 h-8 object-cover' src={icon} alt={label} />
             </span>
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <img className='w-28' src={chartData[coin]} alt="" />
+          <img className='w-28' src={chartData[coin]} alt={`${label} Chart`} />
           <div className="flex flex-col items-end gap-y-2">
             <p className='text-xl font-Dana-Medium'>
               {prices[coin] ? `$${prices[coin]?.toLocaleString()}` : 'Loading...'}
@@ -90,7 +89,7 @@ const CryptoPrices = () => {
   };
 
   return (
-    <div className='my-20 w-full flex gap-x-8'>
+    <div className='my-20 w-full grid grid-cols-1 md:grid-cols-4 gap-6'>
       {renderCard('bitcoin', 'Bitcoin', './icons/btc.svg')}
       {renderCard('ethereum', 'Ethereum', './icons/eth.svg')}
       {renderCard('litecoin', 'Litecoin', './icons/ltc.png')}
